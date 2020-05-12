@@ -1,5 +1,5 @@
 # local import
-from app import db, datetime
+from app.models import db, datetime
 
 class TimestampModel():
     created_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
