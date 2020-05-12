@@ -1,6 +1,8 @@
+from instance.config import SQLALCHEMY_DATABASE_URI, SECRET_KEY
+
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = 'YOUR_DATABASE'
-    SECRET_KEY = 'SECRET_KEY'
+    SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI
+    SECRET_KEY = SECRET_KEY
     
 
 class ProductionConfig(Config):
