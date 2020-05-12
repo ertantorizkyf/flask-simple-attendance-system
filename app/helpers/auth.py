@@ -1,7 +1,7 @@
 from flask import redirect
 
 from app import login_manager
-from app.models.user import User
+from app.models.user import UserModel
 
 @login_manager.user_loader
 def load_user(user_id):

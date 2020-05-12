@@ -4,7 +4,7 @@ from flask_login import login_user, login_required, current_user, login_user, lo
 
 # local import
 from app import db
-from app.models.user import User
+from app.models.user import UserModel
 from app.helpers import auth
 
 # @login_manager.request_loader
