@@ -26,8 +26,9 @@ def create_app(config_name):
     login_manager.init_app(app)
 
     with app.app_context():
-        from app.routes import user
+        # register all blueprints
+        from app import routes
 
-        app.register_blueprint(user.user_bp)
+        routes.register_blueprints(app)
         
         return app
