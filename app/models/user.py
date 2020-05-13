@@ -1,5 +1,6 @@
 # package import
-from werkzeug.security import generate_password_hash, check_password_hash
+import hashlib
+import bcrypt
 
 # local import
 from app.models import db, datetime, UserMixin
@@ -34,3 +35,12 @@ class UserModel(UserMixin, db.Model, TimestampModel):
 
     def delete(self):
         self.deleted_at = datetime.utcnow().isoformat()
+
+    def check_password(self, password):
+        raw_password = hashlib.sha256(password.encode()).hexdigest()
+        is_password_match = bcrypt.checkpw(raw_password.encode(), self.password.encode())
+
+        if is_password_match:
+            return True
+
+        return False
