@@ -14,6 +14,9 @@ user_bp = Blueprint('user_bp', __name__)
 
 @user_bp.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect('/')
+
     if request.method == 'GET':
         return render_template('user/login.html')
     else:
@@ -42,7 +45,7 @@ def logout():
 @user_bp.route('/')
 @login_required
 def index():
-    return render_template('index.html')
+    return render_template('index.html', current_user=current_user)
 
 @user_bp.route('/user/create-admin')
 def create_admin():
