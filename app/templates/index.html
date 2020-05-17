@@ -4,6 +4,10 @@
 <title>Home</title>
 {% endblock %}
 
+{% block current_user_name %}
+{{ current_user.name}}
+{% endblock %}
+
 {% block body %}
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
