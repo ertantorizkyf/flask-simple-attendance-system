@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Attendance</title>
+{% endblock %}
+
+{% block current_user_name %}
+{{ current_user.name}}
+{% endblock %}
+
+{% block body %}
+<!-- Basic Card Example -->
+<div class="card shadow mb-4 col-lg-6 center mx-auto">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Attendance Report</h6>
+    </div>
+    <div class="card-body">
+        <form action="/attendance/report" method="POST">
+            <div class="form-group">
+                <input type="text" name="current_time_view" id="current_time_view" class="form-control" value="" readonly>
+                <input type="hidden" name="current_time" id="current_time"value="">
+            </div>
+            <div class="text-center">
+                <input type="submit" name="report_btn" id="report_btn" value="in" class="btn btn-primary" style="width: 49%;">
+                <input type="submit" name="report_btn" id="report_btn" value="out" class="btn btn-primary" style="width: 49%;">
+            </div>
+        </form>
+        {% if message is defined %}
+        <br>
+        <p class="text-center">{{ message }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>    
+    $(document).ready(function(){
+        var now = new Date;
+        var utc_timestamp = new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(), 
+            now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()));
+        
+        $('#current_time_view').val(utc_timestamp);
+        $('#current_time').val($.format.date(utc_timestamp, 'yyyy-MM-dd HH:mm:ss'));
+    })
+</script>
+{% endblock %}
