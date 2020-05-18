@@ -15,6 +15,9 @@ class UserModel(UserMixin, db.Model, TimestampModel):
     password = db.Column(db.String(255), nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     last_login_date = db.Column(db.DateTime, nullable=True)
+
+    # Relationship
+    attendances = db.relationship('AttendanceModel', back_populates='user')
     
 
     @classmethod
