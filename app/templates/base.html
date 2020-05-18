@@ -13,6 +13,9 @@
   <link href="{{ url_for('static', filename='sbadmin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+  <!-- datatables -->
+  <link href="{{ url_for('static', filename='sbadmin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
+
   <!-- Custom styles for this template-->
   <link href="{{ url_for('static', filename='sbadmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 </head>
@@ -60,8 +63,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                    <a class="collapse-item" href="#">Report Attendance</a>
-                    <a class="collapse-item" href="#">Attendance History</a>
+                    <a class="collapse-item" href="/attendance/report">Report Attendance</a>
+                    <a class="collapse-item" href="/attendance/history">Attendance History</a>
                 </div>
                 </div>
             </li>
@@ -245,6 +248,14 @@
     <!-- Page level custom scripts -->
     <script src="{{ url_for('static', filename='sbadmin/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ url_for('static', filename='sbadmin/js/demo/chart-pie-demo.js') }}"></script>
+
+    <!-- JQuery DateTime -->
+    <script src="{{ url_for('static', filename='js/jquery-dateFormat.min.js') }}"></script>
+
+    <!-- Datatables -->
+    <script src="{{ url_for('static', filename='sbadmin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='sbadmin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='sbadmin/js/demo/datatables-demo.js') }}"></script>
 
     {% block script %}{% endblock %}
 
