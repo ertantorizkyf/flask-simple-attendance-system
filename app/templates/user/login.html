@@ -35,6 +35,10 @@
                             </div>
                             <input type="submit" value="login" class="btn btn-primary btn-block">
                         </form>
+                        {% if message is defined %}
+                        <br>
+                        <p class="text-center">{{ message }}</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -22,22 +22,22 @@ class UserModel(UserMixin, db.Model, TimestampModel):
 
     @classmethod
     def get_all(cls):
-        return cls.query.all()
+        return cls.query.filter(cls.deleted_date == None).all()
 
     @classmethod
     def get_by_email(cls, email):
-        return cls.query.filter(cls.email == email).first()
+        return cls.query.filter(cls.email == email, cls.deleted_date == None).first()
 
     @classmethod
     def get_by_id(cls, id):
-        return cls.query.filter(cls.id == id).first()
+        return cls.query.filter(cls.id == id, cls.deleted_date == None).first()
     
     def insert(self):
         db.session.add(self)
         db.session.flush()
 
     def delete(self):
-        self.deleted_at = datetime.utcnow().isoformat()
+        self.deleted_date = datetime.utcnow().isoformat()
 
     def check_password(self, password):
         raw_password = hashlib.sha256(password.encode()).hexdigest()

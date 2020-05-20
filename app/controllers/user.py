@@ -32,9 +32,11 @@ def login():
                 login_user(user)
                 return redirect('/')
             
-            return 'Password doesn\'t match'
+            message = 'Password doesn\'t match'
+            return render_template('user/login.html', message=message)
 
-        return 'Email not registered'
+        message = 'Email not registered'
+        return render_template('user/login.html', message=message)
 
 @user_bp.route('/logout')
 @login_required
@@ -67,3 +69,83 @@ def create_admin():
         return 'Error while inserting admin'
     
     return 'Admin created'
+
+@user_bp.route('/user/create', methods=['GET', 'POST'])
+@login_required
+def create():
+    if not current_user.is_admin:
+        return 'forbidden access'
+
+    if request.method == 'GET':
+        return render_template('user/create.html')
+    else:
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+            
+        raw_password = hashlib.sha256(password.encode()).hexdigest()
+        hashed_password = bcrypt.hashpw(raw_password.encode(), bcrypt.gensalt())
+
+        admin = UserModel(
+            name = name,
+            email = email,
+            password = hashed_password,
+            is_admin = False
+        )
+
+        try:
+            admin.insert()
+            db.session.commit()
+        except:
+            db.session.rollback()
+            message = 'Error while inserting user'
+        
+        message = 'User successfully created'
+        return render_template('user/create.html', message=message)
+
+@user_bp.route('/user/list')
+@login_required
+def user_list():
+    users = UserModel.get_all()
+    return render_template('user/list.html', current_user=current_user, users=users)
+
+@user_bp.route('/user/<int:id>/delete')
+@login_required
+def delete(id):
+    user = UserModel.get_by_id(id)
+
+    try:
+        user.delete()
+        db.session.commit()
+    except:
+        db.session.rollback()
+        message = 'Error while deleting user'
+    
+    message = 'User successfully deleted'
+    return '''<script>
+    alert("''' + message + '''");
+    window.location.href="/user/list";
+    </script>'''
+
+@user_bp.route('/user/<int:id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+    if not current_user.is_admin:
+        return 'forbidden access'
+
+    if request.method == 'GET':
+        user = UserModel.get_by_id(id)
+        return render_template('user/edit.html', user=user)
+    else:
+        user = UserModel.get_by_id(id)
+        
+        try:
+            user.name = request.form['name']
+            user.email = request.form['email']
+            db.session.commit()
+        except:
+            db.session.rollback()
+            message = 'Error while updating user'
+        
+        message = 'User successfully updated'
+        return render_template('user/edit.html', message=message, user=user)
