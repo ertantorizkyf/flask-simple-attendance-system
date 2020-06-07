@@ -20,7 +20,7 @@ flask db init
 flask db migrate
 flask db upgrade
 ```
-3. Select the flask environmen to run
+3. Select the flask environment to run
 ```
 example:
 set flask_config=development
